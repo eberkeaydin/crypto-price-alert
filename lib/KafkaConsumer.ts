@@ -1,26 +1,30 @@
+import * as dotenv from 'dotenv';
 import kafka from 'kafka-node';
-import admin from 'firebase-admin';
-import Alert from '../src/app/models/Alert';
 import connectDB from './mongo';
+import { checkAndTriggerAlert } from '../src/app/services/AlertService';
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_CREDENTIALS)),
-  });
-}
+dotenv.config();
 
 const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER });
-const consumer = new kafka.Consumer(client, [{ topic: process.env.KAFKA_TOPIC as string, partition: 0 }]);
+
+const consumer = new kafka.Consumer(
+  client,
+  [{ topic: process.env.KAFKA_TOPIC as string, partition: 0 }],
+  {}
+);
 
 consumer.on('message', async (message) => {
+  console.log('✅ Received Alert Event:', message);
   await connectDB();
+
   const alertData = JSON.parse(message.value as string);
-  console.log('Processing Alert:', alertData);
 
-  await admin.messaging().send({
-    token: alertData.userToken,
-    notification: { title: 'Crypto Alert!', body: `Your ${alertData.crypto} alert was triggered.` },
-  });
-
-  await Alert.updateOne({ _id: alertData._id }, { isTriggered: true });
+  // Check operations when a new alarm triggered
+  await checkAndTriggerAlert(alertData);
 });
+
+consumer.on('error', (err) => {
+  console.error('❌ Kafka Consumer Error:', err);
+});
+
+console.log("📡 Kafka Consumer is running and listening for events...");
