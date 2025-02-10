@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv';
 import admin from 'firebase-admin';
-import * as fs from 'fs';
 
 dotenv.config();
 
@@ -8,8 +7,8 @@ if (!process.env.FIREBASE_CREDENTIALS) {
   throw new Error("FIREBASE_CREDENTIALS is not defined in .env");
 }
 
-const firebaseCredentialsPath = process.env.FIREBASE_CREDENTIALS.trim(); // Trim spaces
-const firebaseCredentials = JSON.parse(fs.readFileSync(firebaseCredentialsPath, 'utf8'));
+// JSON string olarak gelen env değişkenini parse et
+const firebaseCredentials = JSON.parse(process.env.FIREBASE_CREDENTIALS.replace(/\\n/g, '\n'));
 
 // Firebase initialization
 if (!admin.apps.length) {
