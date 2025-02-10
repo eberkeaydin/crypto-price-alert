@@ -1,10 +1,7 @@
 import request from 'supertest';
 import { createServer } from 'http';
 import handler from '../../pages/api/alert';
-import Alert from '../../src/app/models/Alert';
-import { publishAlertEvent } from '../../lib/KafkaProducer';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createRequest, createResponse } from 'node-mocks-http';
 
 jest.mock('../../src/app/models/Alert', () => ({
   create: jest.fn().mockResolvedValue({ userId: '123', crypto: 'BTC', condition: 'greater_than', targetPrice: 50000 }),

@@ -18,7 +18,7 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: MONGO_URI
+        - name: MONGODB_URI
           value: "mongodb://mongo_db:27017"
         - name: REDIS_HOST
           value: "redis_cache"
