@@ -10,7 +10,7 @@ export function authenticateToken(req: NextApiRequest, res: NextApiResponse, nex
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     req.user = decoded; // Kullanıcıyı request objesine ekle
     next();
-  } catch (error) {
+  } catch () {
     return res.status(403).json({ error: 'Invalid token' });
   }
 }

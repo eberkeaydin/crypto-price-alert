@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import connectDB from '../../../lib/mongo';
 import User from '../../../src/app/models/User';
 
@@ -19,8 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ username, email, password: hashedPassword });
 
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
+    res.status(201).json({ message: 'User registered successfully': newUser });
+  } catch () {
     res.status(500).json({ error: 'Server error' });
   }
 }
