@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ username, email, password: hashedPassword });
 
-    res.status(201).json({ message: 'User registered successfully': newUser });
+    res.status(201).json({ message: 'User registered successfully', newUser });
   } catch () {
     res.status(500).json({ error: 'Server error' });
   }
