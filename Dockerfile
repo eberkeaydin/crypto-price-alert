@@ -4,10 +4,13 @@ WORKDIR /app
 
 # Paketleri yükle
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
 
 # Proje dosyalarını kopyala
 COPY . .
 
-# Uygulamayı başlat
-CMD ["npm", "run", "dev"]
+# Next.js için Production Build Al
+RUN npm run build
+
+# Production ortamında başlat
+CMD ["npm", "run", "start"]

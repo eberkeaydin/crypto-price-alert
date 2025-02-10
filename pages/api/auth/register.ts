@@ -19,7 +19,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newUser = await User.create({ username, email, password: hashedPassword });
 
     res.status(201).json({ message: 'User registered successfully', newUser });
-  } catch () {
+  } catch (error) {
+    console.error("Error: ", error)
     res.status(500).json({ error: 'Server error' });
   }
 }

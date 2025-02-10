@@ -22,7 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
     res.status(200).json({ token });
-  } catch () {
+  } catch (error) {
+    console.error("Error: ", error)
     res.status(500).json({ error: 'Server error' });
   }
 }
