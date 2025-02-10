@@ -23,6 +23,9 @@ steps:
     env:
       - "CLOUDSDK_COMPUTE_REGION=us-central1"  # Bölgeyi tanımla
       - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1" # Cluster ismini tanımla
+  
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["rollout", "restart", "deployment/node-app"]
 
 options:
   logging: CLOUD_LOGGING_ONLY
