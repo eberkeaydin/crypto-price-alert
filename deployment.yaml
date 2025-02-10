@@ -94,6 +94,7 @@ spec:
       containers:
       - name: node-app
         image: gcr.io/node-crypto-alarm-service/node-app:latest
+        command: [ "sh", "/app/start.sh" ]
         ports:
         - containerPort: 3000
 ---
