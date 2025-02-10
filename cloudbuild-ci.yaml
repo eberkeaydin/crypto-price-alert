@@ -1,0 +1,21 @@
+steps:
+  # Docker Image Build
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/node-crypto-alarm-service/node-app-dev",
+          "--build-arg", "CRYPTO_API_URL=${_CRYPTO_API_URL}", "--build-arg", "FIREBASE_CREDENTIALS=${_FIREBASE_CREDENTIALS}",
+          "--build-arg", "JWT_SECRET=${_JWT_SECRET}", "--build-arg", "KAFKA_BROKER=${_KAFKA_BROKER}",
+          "--build-arg", "KAFKA_TOPIC=${_KAFKA_TOPIC}", "--build-arg", "MONGODB_URI=${_MONGODB_URI}",
+          "--build-arg", "REDIS_URL=${_REDIS_URL}",
+          "."]
+
+  # Docker Image Push
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/node-crypto-alarm-service/node-app-dev"]
+
+  # Run tests inside the pushed container
+  - name: "gcr.io/cloud-builders/docker"
+    args: [
+      "run", "--rm",
+      "gcr.io/node-crypto-alarm-service/node-app-dev:latest",
+      "sh", "-c", "npm test"
+    ]
