@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.12.6",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "firebase-admin": "^13.0.2",
