@@ -5,3 +5,6 @@ steps:
     args: ["push", "gcr.io/node-crypto-alarm-service/node-app"]
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["kubectl", "apply", "-f", "deployment.yaml"]
+options:
+  logging: CLOUD_LOGGING_ONLY
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
