@@ -18,6 +18,10 @@ export const checkAlerts = async () => {
 
   const pendingAlerts = await Alert.find({ isTriggered: false });
 
+  if (pendingAlerts.length > 0) {
+    console.log(`✅ ${pendingAlerts.length} Waiting alerts found`);
+  }
+
   for (const alert of pendingAlerts) {
     const currentPrice = prices[alert.crypto.toLowerCase()]?.usd || 0;
 
