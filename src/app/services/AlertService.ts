@@ -4,7 +4,15 @@ import { messaging } from '../../../lib/firebase';
 
 const redis = new Redis(process.env.REDIS_URL as string);
 
-export const checkAndTriggerAlert = async (alertData: any) => {
+// 📌 `alertData` için kesin bir tip tanımlıyoruz
+interface AlertData {
+  _id: string;
+  crypto: string;
+  targetPrice: number;
+  condition: 'greater_than' | 'less_than';
+}
+
+export const checkAndTriggerAlert = async (alertData: AlertData) => {
   const prices = JSON.parse(await redis.get('cryptoPrices') || '{}');
   const currentPrice = prices[alertData.crypto.toLowerCase()]?.usd || 0;
 
