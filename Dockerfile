@@ -17,15 +17,15 @@ ENV FIREBASE_CREDENTIALS ${FIREBASE_CREDENTIALS}
 ARG CRYPTO_API_URL
 ENV CRYPTO_API_URL ${CRYPTO_API_URL}
 
-# Paketleri yükle
+# Install packages
 COPY package*.json ./
 RUN npm install --production
 
-# Proje dosyalarını kopyala
+# Copy project folders
 COPY . .
 
-# Next.js için Production Build Al
+# Next.js build for prod 
 RUN npm run build
 
-# Production ortamında başlat
+# Execute on the prod environment
 CMD ["npm", "run", "start"]

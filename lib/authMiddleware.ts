@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 
-// NextApiRequest türüne 'user' özelliğini eklemek için Interface Declaration Merging
 declare module 'next' {
   interface NextApiRequest {
-    user?: any; // Kullanıcıyı buraya ekliyoruz (JWT payload türüne göre güncelleyebilirsin)
+    user?: any;
   }
 }
 
@@ -15,7 +14,7 @@ export function authenticateToken(req: NextApiRequest, res: NextApiResponse, nex
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    req.user = decoded; // Kullanıcıyı request nesnesine ekle
+    req.user = decoded;
     next();
   } catch (error) {
     console.error("Error: ", error);

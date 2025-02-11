@@ -7,14 +7,13 @@ import { authenticateToken } from '../../lib/authMiddleware';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectDB();
 
-  // Kimlik doğrulama
   authenticateToken(req, res, async () => {
     if (req.method === 'POST') {
       const { crypto, condition, targetPrice } = req.body;
 
       try {
         const newAlert = await Alert.create({
-          userId: req.user.id, // Token'dan alınan userId
+          userId: req.user.id,
           crypto,
           condition,
           targetPrice
@@ -30,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     else if (req.method === 'GET') {
       try {
-        const alerts = await Alert.find({ userId: req.user.id }); // Token'dan alınan userId ile filtreleme
+        const alerts = await Alert.find({ userId: req.user.id });
         res.status(200).json(alerts);
       } catch (error) {
         console.error("Error while fetching alerts:", error);

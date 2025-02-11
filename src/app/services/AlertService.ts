@@ -4,7 +4,6 @@ import { messaging } from '../../../lib/firebase';
 
 const redis = new Redis(process.env.REDIS_URL as string);
 
-// 📌 `alertData` için kesin bir tip tanımlıyoruz
 interface AlertData {
   _id: string;
   crypto: string;

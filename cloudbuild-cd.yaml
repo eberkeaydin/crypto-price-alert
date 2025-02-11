@@ -12,28 +12,28 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/node-crypto-alarm-service/node-app"]
 
-  # GKE Kubernetes Cluster'a Kimlik Doğrulama (Yetkilendirme)
+  # GKE Kubernetes Cluster authorization 
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       - "container"
       - "clusters"
       - "get-credentials"
-      - "autopilot-cluster-1"  # Kubernetes cluster adını buraya yaz
+      - "autopilot-cluster-1"
       - "--region"
-      - "us-central1"  # Örneğin: us-central1
+      - "us-central1"
 
-  # Kubernetes Deployment Güncelleme
+  # Kubernetes Deployment Update
   - name: "gcr.io/cloud-builders/kubectl"
     args: ["apply", "-f", "deployment.yaml"]
     env:
-      - "CLOUDSDK_COMPUTE_REGION=us-central1"  # Bölgeyi tanımla
-      - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1" # Cluster ismini tanımla
+      - "CLOUDSDK_COMPUTE_REGION=us-central1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1"
   
   - name: "gcr.io/cloud-builders/kubectl"
     args: ["rollout", "restart", "deployment/node-app"]
     env:
-      - "CLOUDSDK_COMPUTE_REGION=us-central1"  # Bölgeyi tanımla
-      - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1" # Cluster ismini tanımla
+      - "CLOUDSDK_COMPUTE_REGION=us-central1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1"
 
 options:
   logging: CLOUD_LOGGING_ONLY

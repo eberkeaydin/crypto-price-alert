@@ -25,7 +25,7 @@ describe('Service - checkAndTriggerAlert', () => {
       _id: '1', 
       userId: '123', 
       crypto: 'BTC', 
-      condition: 'greater_than' as const,  // 🔹 `as const` kullanımı  
+      condition: 'greater_than' as const,  
       targetPrice: 50000 
     };
     
