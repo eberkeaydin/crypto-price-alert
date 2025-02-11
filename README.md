@@ -46,7 +46,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Architecture
 
-![Architecture](/crypto-alarm-system.drawio.png)
+![Architecture](./readme_assets/crypto-alarm-system.drawio.png)
 
 jwt Auth is used for authentication. To secure all of the requests a middleware implemented that checks the token.
 
@@ -62,11 +62,23 @@ To demonstrate the notification messaging, Firebase Messaging services used.
 
 Service uses Google Cloud Platform's cloud services such as Kubernetes Cloud Engine(running pods), Cloud Build(CI/CD), Artifact Registry(repo) configured.
 
-All of the artifacts can be deployed with a single deployment yaml file.  
+All of the artifacts can be deployed with a single deployment yaml file.
 
-Continuous integration is handled via cloudbuild-ci.yaml file which checks integration and uniy tests
+Continuous integration is handled via cloudbuild-ci.yaml file which checks integration and unit tests
 
 Continuous deployment is handled via cloudbuild-cd.yaml file which sets the environment variables and cluster configuration
+
+Once a commit pushed to the main as:
+
+![commit](./readme_assets/commit-push.PNG)
+
+Cloud Build detects the changes in repository and triggers the CD pipeline(for main):
+
+![build](./readme_assets/cloud-build.PNG)
+
+Then Kubernetes Engine create a new pod and terminate the previous one:
+
+![kubernetes](./readme_assets/kubernetes-engine.PNG)
 
 ## API Collection
 
